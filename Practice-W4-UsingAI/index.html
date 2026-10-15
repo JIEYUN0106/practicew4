@@ -1,0 +1,364 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scene Website</title>
+
+    <style>
+        /* ===== 基本設定 ===== */
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 140px;
+        }
+
+        body {
+            margin: 0;
+            background-color: #ffffff;
+            color: #000000;
+            font-family: Georgia, "Times New Roman", serif;
+        }
+
+        /* ===== 頂部 Banner ===== */
+        .banner {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+
+            width: min(960px, 100%);
+            height: 120px;
+            padding: 0 24px;
+
+            display: flex;
+            align-items: center;
+
+            background-color: #f5edcf;
+            color: #444444;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 40px;
+            font-weight: bold;
+        }
+
+        /* ===== 主要內容區域 ===== */
+        .layout {
+            width: min(960px, 100%);
+            margin: 0 auto;
+            padding-top: 140px;
+
+            display: grid;
+            grid-template-columns: 130px minmax(0, 1fr) 145px;
+            column-gap: 24px;
+            align-items: start;
+        }
+
+        /* ===== 左側選單 ===== */
+        .sidebar {
+            position: sticky;
+            top: 140px;
+
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding-top: 4px;
+        }
+
+        .scene-button {
+            width: 130px;
+            min-height: 26px;
+            padding: 2px 4px;
+
+            border: none;
+            border-radius: 0;
+            background-color: #eeeeee;
+            color: #78539a;
+
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 20px;
+            text-align: center;
+
+            cursor: pointer;
+            transition: background-color 0.2s,
+                        color 0.2s;
+        }
+
+        .scene-button:hover {
+            background-color: #ded3e8;
+            color: #4f286e;
+        }
+
+        .scene-button.active {
+            background-color: #e3d9eb;
+            color: #4f286e;
+        }
+
+        /* ===== 中間場景區域 ===== */
+        .scene-container {
+            min-width: 0;
+        }
+
+        .scene {
+            min-height: calc(100vh - 140px);
+            padding-top: 4px;
+            scroll-margin-top: 140px;
+        }
+
+        .scene h1 {
+            margin: 0;
+            color: #000000;
+
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 40px;
+            font-weight: bold;
+            line-height: 1.2;
+        }
+
+        /* ===== 右側資訊欄 ===== */
+        .information-column {
+            position: sticky;
+            top: 140px;
+        }
+
+        .information {
+            width: 145px;
+            height: 180px;
+            padding: 10px;
+
+            background-color: #f2b6cc;
+            color: #000000;
+
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 20px;
+        }
+
+        .information.hidden {
+            display: none;
+        }
+
+        /* ===== Footer ===== */
+        .footer {
+            width: min(960px, 100%);
+            height: 100px;
+            margin: 0 auto;
+            padding: 0 24px;
+
+            display: flex;
+            align-items: center;
+
+            background-color: #f5edcf;
+            color: #444444;
+
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* ===== 較窄的螢幕 ===== */
+        @media (max-width: 700px) {
+            .banner {
+                height: 100px;
+                font-size: 32px;
+            }
+
+            .layout {
+                padding: 116px 12px 0;
+                grid-template-columns: 105px minmax(0, 1fr);
+                column-gap: 16px;
+            }
+
+            .sidebar,
+            .information-column {
+                top: 116px;
+            }
+
+            .scene-button {
+                width: 105px;
+                font-size: 17px;
+            }
+
+            .scene {
+                min-height: calc(100vh - 116px);
+                scroll-margin-top: 116px;
+            }
+
+            .scene h1 {
+                font-size: 32px;
+                overflow-wrap: anywhere;
+            }
+
+            .information-column {
+                grid-column: 2;
+                position: fixed;
+                right: 12px;
+                bottom: 12px;
+                top: auto;
+                z-index: 10;
+            }
+
+            .information {
+                width: 120px;
+                height: 140px;
+                font-size: 17px;
+            }
+
+            .footer {
+                padding: 0 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 頂部 Banner -->
+    <header class="banner">
+        Here is Banner
+    </header>
+
+    <!-- 主要內容 -->
+    <main class="layout">
+
+        <!-- 左側選單 -->
+        <nav class="sidebar" aria-label="Scene navigation">
+            <button class="scene-button active"
+                    data-scene="scene01">Scene01</button>
+
+            <button class="scene-button"
+                    data-scene="scene02">Scene02</button>
+
+            <button class="scene-button"
+                    data-scene="scene03">Scene03</button>
+
+            <button class="scene-button"
+                    data-scene="scene04">Scene04</button>
+        </nav>
+
+        <!-- 中間場景：每個場景都可以上下滑動 -->
+        <div class="scene-container">
+
+            <section class="scene" id="scene01">
+                <h1>Scene01</h1>
+            </section>
+
+            <section class="scene" id="scene02">
+                <h1>Scene02</h1>
+            </section>
+
+            <section class="scene" id="scene03">
+                <h1>Scene03</h1>
+            </section>
+
+            <section class="scene" id="scene04">
+                <h1>Scene04</h1>
+            </section>
+
+        </div>
+
+        <!-- 右側資訊欄 -->
+        <aside class="information-column">
+            <div class="information" id="information">
+                Information
+            </div>
+        </aside>
+
+    </main>
+
+    <!-- 頁面最底部的 Footer -->
+    <footer class="footer">
+        Here is footer
+    </footer>
+
+    <script>
+const buttons = document.querySelectorAll(".scene-button");
+const scenes = document.querySelectorAll(".scene");
+const information = document.getElementById("information");
+
+let currentScene = "scene01";
+let isClickScrolling = false;
+let scrollEndTimer;
+
+// 更新選單及資訊欄
+function updateScene(sceneId) {
+    currentScene = sceneId;
+
+    buttons.forEach(function(button) {
+        const isActive = button.dataset.scene === sceneId;
+
+        button.classList.toggle("active", isActive);
+        button.setAttribute("aria-pressed", String(isActive));
+    });
+
+    // 只有 Scene01 顯示 Information
+    information.classList.toggle(
+        "hidden",
+        sceneId !== "scene01"
+    );
+}
+
+// 點擊選單，移動到指定場景
+buttons.forEach(function(button) {
+    button.addEventListener("click", function() {
+        const sceneId = button.dataset.scene;
+
+        // 先確定場景狀態，再開始滑動
+        updateScene(sceneId);
+        isClickScrolling = true;
+
+        clearTimeout(scrollEndTimer);
+
+        document.getElementById(sceneId).scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+
+        // 等待平滑滾動結束，避免觀察器反覆切換
+        scrollEndTimer = setTimeout(function() {
+            isClickScrolling = false;
+            updateScene(findCurrentScene());
+        }, 900);
+    });
+});
+
+// 找出目前最接近 Banner 下方的場景
+function findCurrentScene() {
+    let closestScene = scenes[0];
+    let smallestDistance = Infinity;
+
+    scenes.forEach(function(scene) {
+        const distance = Math.abs(
+            scene.getBoundingClientRect().top - 140
+        );
+
+        if (distance < smallestDistance) {
+            smallestDistance = distance;
+            closestScene = scene;
+        }
+    });
+
+    return closestScene.id;
+}
+
+// 監測使用者手動上下滑動
+window.addEventListener("scroll", function() {
+    if (isClickScrolling) return;
+
+    clearTimeout(scrollEndTimer);
+
+    scrollEndTimer = setTimeout(function() {
+        updateScene(findCurrentScene());
+    }, 100);
+}, { passive: true });
+
+// 預設顯示 Scene01
+updateScene("scene01");
+
+    </script>
+
+</body>
+</html>
